@@ -1,0 +1,43 @@
+;  this method looks for a .TXT file with this library's name
+;  if found, reads it and parses it for paths to libraries to open
+;  and then closes itself
+
+;  comments are prefixed by a hash (#) and will be ignored
+;  and if the path begins with !!! the startup task for the library
+;  will be added to a list to instantiate after all libs are open
+
+
+Do llLibs.$cols.$add('lib',kCharacter,kSimplechar)
+Do llLibs.$cols.$add('task',kCharacter,kSimplechar)
+
+Calculate lcPath as sys(10)
+Do FileOps.$splitpathname(lcPath,lcDrive,lcDir,lcFile,lcExt)
+Calculate lcPath as con(lcDrive,sys(9),lcDir,sys(9),lcFile,'.txt')
+Do FileOps.$doesfileexist(lcPath) Returns lbProceed
+If lbProceed
+	;  read the file and open the library
+	Do loFileOps.$openfile(lcPath,kTrue)
+	Do loFileOps.$readcharacter(kUniTypeAuto,lcFileContents)
+	Do loFileOps.$closefile()
+	Do method DetermineRowDelimiter (lcFileContents) Returns lcDelimiter
+	While len(lcFileContents)
+		Calculate lcPath as strtok('lcFileContents',lcDelimiter)
+		Do method removeComment (lcPath) Returns lcPath
+		If len(lcPath)
+			Calculate lbNotStarted as pos('!!!',lcPath)
+			Do $libs.$add(lcPath,,,,lnErrCode,lcErrText) Returns lrefLib
+			If isnull(lrefLib)
+				Open trace log
+				Send to trace log {Error opening library "[lcPath]": [lcErrText]}
+			Else If lbNotStarted
+				Do llLibs.$add(lrefLib.$name,con(lrefLib.$name,'.',lrefLib.$prefs.$startuptaskname))
+			End If
+		End If
+	End While
+End If
+
+For llLibs.$line from 1 to llLibs.$linecount step 1
+	Do $itasks.$add(llLibs.task,llLibs.lib) Returns lrefTask
+End For
+
+Do $libs.$remove($clib)

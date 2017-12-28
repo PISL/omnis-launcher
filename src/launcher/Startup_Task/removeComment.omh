@@ -1,0 +1,6 @@
+;  return portion of string up to the hash (#) character
+If pos('#',pcInputString)
+	Quit method trim(left(pcInputString,pos('#',pcInputString)-1))
+Else
+	Quit method trim(pcInputString)
+End If

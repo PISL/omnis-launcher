@@ -1,0 +1,7 @@
+/Users/graham/Documents/Omnis/omniscli/omniscli.lbs  # Alex’s CLI library
+/Users/graham/Documents/Omnis/omnistap/omnistap.lbs  # Alex’s TAP library
+/Users/graham/Documents/Omnis/infra/infra.lbs        # needed by all apps
+!!!/Users/graham/Documents/Omnis/common.lbs          # common to internal apps
+#/Users/graham/Documents/Omnis/APP/libone.lbs
+/Users/graham/Documents/Omnis/APP/libtwo.lbs
+
