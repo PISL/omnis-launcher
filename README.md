@@ -11,7 +11,7 @@ This file should contain full path names of the libraries you wish to open, one 
 
 or 
 
-`C:/path/to/library/lib.lbs`
+`D:\path\to\library\lib.lbs`
 
 The file can contain comments marked with a hash '#' 
 
