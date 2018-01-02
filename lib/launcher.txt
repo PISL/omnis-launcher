@@ -1,3 +1,6 @@
+# this is an example file for guidance
+# comments like this will be ignored by the library
+# paths can be prefixed with !!! to have the startup task instantiated once all libs are open
 /Users/graham/Documents/Omnis/omniscli/omniscli.lbs  # Alex’s CLI library
 /Users/graham/Documents/Omnis/omnistap/omnistap.lbs  # Alex’s TAP library
 /Users/graham/Documents/Omnis/infra/infra.lbs        # needed by all apps
